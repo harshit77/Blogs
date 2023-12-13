@@ -5,7 +5,7 @@ import prisma from "@/lib/db";
 export async function POST(req: Request) {
   try {
     const user = await getCurrentUser();
-    if (!user?.email) {
+    if (!user) {
       return NextResponse.json(
         { message: "You are not authorised to see the content" },
         { status: 401 }
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       data: {
         title,
         content,
-        authorEmail: user?.email,
+        authorEmail: user?.email as string,
       },
     });
     return NextResponse.json({ message: "Success" }, { status: 201 });

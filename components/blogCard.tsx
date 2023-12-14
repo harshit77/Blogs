@@ -8,9 +8,12 @@ import {
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { BlogCard } from "@/app/@posts/(.)blogs/page";
 
 export default function BlogCard({
   blog: { title, content, id, createdAt, author },
+}: {
+  blog: BlogCard;
 }) {
   return (
     <Link key={id} href={`/blogs/${id}`}>

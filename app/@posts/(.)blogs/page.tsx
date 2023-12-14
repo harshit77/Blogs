@@ -1,20 +1,15 @@
 import prisma from "@/lib/db";
 import BlogCard from "@/components/blogCard";
 
-interface Author {
-  name: string | null;
-  email: string | null;
-  image: string | null;
-}
-
-interface Post {
+export interface BlogCard {
   title: string | null;
   content: string | null;
   id: string | null;
-  createdAt: Date | null;
+  createdAt: number | Date | undefined;
   author: {
-    [key: string]: Author;
-  };
+    name: string | null;
+    image: string | null;
+  } | null;
 }
 
 export default async function Page() {

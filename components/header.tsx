@@ -1,7 +1,7 @@
 import getCurrentUser from "@/lib/session";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { LogOut, Mail, Plus, Upload } from "lucide-react";
+import { LayoutDashboard, LogOut, Mail } from "lucide-react";
 import { AvatarFallback, Avatar, AvatarImage } from "./ui/avatar";
 
 export default async function Header() {
@@ -10,18 +10,10 @@ export default async function Header() {
   const rightMenu = user ? (
     <>
       <li>
-        <Link href="/blogs/bulkupload">
+        <Link href="/">
           <Button variant="ghost">
-            <Upload className="mr-2" />
-            Bulk Upload
-          </Button>
-        </Link>
-      </li>
-      <li>
-        <Link href="/blogs/create">
-          <Button variant="ghost">
-            <Plus className="mr-2" />
-            Create a Post
+            <LayoutDashboard className="mr-2" />
+            Dashboard
           </Button>
         </Link>
       </li>

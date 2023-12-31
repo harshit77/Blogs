@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -58,20 +59,47 @@ model VerificationToken {
 }
 
 model Post {
-  id        String    @id @default(cuid())
-  title     String
-  content   String    @db.Text
-  author    User?     @relation(fields: [authorEmail], references: [email])
-  authorEmail  String
-  createdAt DateTime  @default(now())
-  comments  Comment[]
+  id          String               @id @default(cuid())
+  title       String               @unique
+  content     String               @db.Text
+  author      User?                @relation(fields: [authorEmail], references: [email])
+  authorEmail String
+  createdAt   DateTime             @default(now())
+  comments    Comment[]
+  contacts    MessagesOnContacts[]
 }
 
 model Comment {
-  id       String @id @default(cuid())
-  text     String
-  author   User?  @relation(fields: [authorEmail], references: [email])
+  id          String @id @default(cuid())
+  text        String
+  author      User?  @relation(fields: [authorEmail], references: [email])
   authorEmail String
-  post     Post?  @relation(fields: [postId], references: [id])
-  postId   String
+  post        Post?  @relation(fields: [postId], references: [id])
+  postId      String
+}
+
+model Contact {
+  username     String
+  mobileNumber BigInt               @unique
+  email        String?
+  messages     MessagesOnContacts[]
+}
+
+enum MessageStatus {
+  ACK_ERROR
+  ACK_PENDING
+  ACK_SERVER
+  ACK_DEVICE
+  ACK_READ
+}
+
+model MessagesOnContacts {
+  post          Post          @relation(fields: [postId], references: [id])
+  postId        String
+  contact       Contact       @relation(fields: [contactNumber], references: [mobileNumber])
+  contactNumber BigInt
+  messageStatus MessageStatus
+  linkVisited   Boolean
+
+  @@id([postId, contactNumber])
 }

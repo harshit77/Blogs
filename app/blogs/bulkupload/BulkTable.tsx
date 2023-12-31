@@ -15,7 +15,7 @@ export default function BulkTable({ tableData }: BulkProps) {
         <TableRow>
           {Object.keys(tableData[0]).map((head, index) => (
             <TableHead className="min-w-[100px]" key={index}>
-              {head}
+              {head.charAt(0).toUpperCase() + head.slice(1)}
             </TableHead>
           ))}
         </TableRow>

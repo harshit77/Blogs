@@ -2,7 +2,8 @@ import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/session";
 import { draftMessage } from "@/lib/utils";
 import { NextResponse } from "next/server";
-import { title } from "process";
+import { Contact } from "../bulkContact/route";
+import { MessageStatus } from "@prisma/client";
 
 export interface POST {
   title: string;
@@ -19,13 +20,31 @@ export async function POST(req: Request) {
       );
     }
     const { data } = await req.json();
-    console.log(data);
 
-    await prisma.post.createMany({
-      data: data.map((post: POST) => ({ ...post, authorEmail: user?.email })),
-    });
+    const allContacts: Contact[] = await prisma.contact.findMany();
 
-    data.map(
+    data.forEach(
+      async (post: POST) =>
+        await prisma.post.create({
+          data: {
+            ...post,
+            authorEmail: user.email as string,
+            contacts: {
+              create: allContacts.map((contact) => ({
+                messageStatus: MessageStatus.ACK_PENDING,
+                linkVisited: false,
+                contact: {
+                  connect: {
+                    mobileNumber: contact.mobileNumber,
+                  },
+                },
+              })),
+            },
+          },
+        })
+    );
+
+    data.forEach(
       async ({ title, content }: POST) =>
         await fetch("http://localhost:3050/sendmessage", {
           method: "POST",
@@ -33,8 +52,12 @@ export async function POST(req: Request) {
             "Content-type": "application/json",
           },
           body: JSON.stringify({
-            message: draftMessage(user?.name!, title, content),
-            number: "918840213727",
+            message: allContacts.map((contact: Contact) =>
+              draftMessage(contact.username, title, content)
+            ),
+            number: allContacts.map((contact) =>
+              contact.mobileNumber.toString()
+            ),
           }),
         })
     );

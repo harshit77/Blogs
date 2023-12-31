@@ -38,13 +38,8 @@ export default async function RootLayout({
         )}
       >
         <Header />
-        {!user && (
-          <>
-            {home}
-            {posts}
-          </>
-        )}
-
+        {home}
+        {!user && posts}
         {children}
         <Toaster />
       </body>

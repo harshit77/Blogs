@@ -10,4 +10,10 @@ export enum PRISMA_MESSAGE_STATUS {
   ACK_PLAYED = 4,
 }
 
+export enum PRISMA_POST_TYPE {
+  BlogPost = "BlogPost",
+  DailyTips = "DailyTips",
+  Poll = "Poll",
+}
+
 export type BulkType = typeof POST | typeof CONTACT;

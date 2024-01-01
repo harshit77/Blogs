@@ -58,6 +58,12 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+enum PostType {
+  DailyTips
+  BlogPost
+  Poll
+}
+
 model Post {
   id          String               @id @default(cuid())
   title       String               @unique
@@ -67,6 +73,7 @@ model Post {
   createdAt   DateTime             @default(now())
   comments    Comment[]
   contacts    MessagesOnContacts[]
+  postType   PostType @default(BlogPost)
 }
 
 model Comment {

@@ -4,6 +4,7 @@ import { draftMessage } from "@/lib/utils";
 import { NextResponse } from "next/server";
 import { Contact } from "../bulkContact/route";
 import { MessageStatus } from "@prisma/client";
+import { PRISMA_POST_TYPE } from "@/app/constants";
 
 export interface POST {
   title: string;
@@ -19,7 +20,7 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
-    const { data } = await req.json();
+    const { data, type } = await req.json();
 
     const allContacts: Contact[] = await prisma.contact.findMany();
 
@@ -28,6 +29,7 @@ export async function POST(req: Request) {
         await prisma.post.create({
           data: {
             ...post,
+            postType: type as PRISMA_POST_TYPE,
             authorEmail: user.email as string,
             contacts: {
               create: allContacts.map((contact) => ({

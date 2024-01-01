@@ -9,6 +9,8 @@ import { useToast } from "@/components/ui/use-toast";
 import ExcelJS from "exceljs";
 import { sheet_to_json } from "@/lib/utils";
 import { BulkType, POST } from "@/app/constants";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { PRISMA_POST_TYPE } from "@/app/constants";
 
 export type Bulk = {
   [key: string]: string;
@@ -21,6 +23,9 @@ export interface BulkProps {
 export default function BulkReader({ type = POST }: { type?: BulkType }) {
   const [parsedData, setParsedData] = useState<Bulk[]>([]);
   const [isLoading, setIsloading] = useState(false);
+  const [selectedPostType, setSelectedPostType] = useState<string>(
+    PRISMA_POST_TYPE.DailyTips
+  );
   const { toast } = useToast();
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -49,7 +54,7 @@ export default function BulkReader({ type = POST }: { type?: BulkType }) {
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify({ data: parsedData }),
+          body: JSON.stringify({ data: parsedData, type: selectedPostType }),
         }
       );
       status === 201 &&
@@ -58,6 +63,7 @@ export default function BulkReader({ type = POST }: { type?: BulkType }) {
           description: "Records Created Successfully",
         });
       setParsedData([]);
+      setSelectedPostType(PRISMA_POST_TYPE.DailyTips);
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -69,6 +75,23 @@ export default function BulkReader({ type = POST }: { type?: BulkType }) {
 
   return (
     <div className="flex flex-col space-y-8">
+      <div className="flex flex-col space-y-4">
+        <Label>Post Type</Label>
+        <RadioGroup
+          defaultValue={selectedPostType}
+          className="flex gap-4"
+          onValueChange={(changedValue: string) =>
+            setSelectedPostType(changedValue)
+          }
+        >
+          {Object.keys(PRISMA_POST_TYPE).map((type) => (
+            <div className="flex items-center space-x-2 " key={type}>
+              <RadioGroupItem value={type} id={type} />
+              <Label htmlFor={type}>{type}</Label>
+            </div>
+          ))}
+        </RadioGroup>
+      </div>
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label htmlFor="blog">Bulk Upload</Label>
         <Input

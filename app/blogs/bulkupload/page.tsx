@@ -9,9 +9,12 @@ export default async function BulkUpload() {
   }
   return (
     <div className="container min-h-screen my-8 space-y-8">
-      <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl scroll-m-20">
-        Bulk Upload Posts
-      </h1>
+      <div className="text-4xl font-extrabold tracking-tight lg:text-5xl scroll-m-20 flex items-end">
+        Bulk Upload -
+        <span className="text-4xl text-destructive-foreground">
+          (Blog / Daily Tips / Poll)
+        </span>
+      </div>
       <FileReader />
     </div>
   );

@@ -6,7 +6,7 @@ console.log("Schedule kicked off");
 };
 
 export const config: Config = {
-  schedule: "5 6 * * *",
+  schedule: "15 18 * * *",
 };
 
 export default handler;

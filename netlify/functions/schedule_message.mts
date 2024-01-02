@@ -5,7 +5,7 @@ const handler = async () => {
 };
 
 export const config: Config = {
-  schedule: "55 4 * * *",
+  schedule: "0 6 * * *",
 };
 
 export default handler;

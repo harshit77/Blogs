@@ -74,6 +74,7 @@ model Post {
   comments    Comment[]
   contacts    MessagesOnContacts[]
   postType   PostType @default(BlogPost)
+  scheduledTime DateTime  @db.Date
 }
 
 model Comment {
@@ -90,6 +91,7 @@ model Contact {
   mobileNumber BigInt               @unique
   email        String?
   messages     MessagesOnContacts[]
+  preferredTime DateTime @db.Time(0)
 }
 
 enum MessageStatus {

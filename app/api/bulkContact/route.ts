@@ -1,11 +1,14 @@
 import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/session";
 import { NextResponse } from "next/server";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 
 export interface Contact {
   username: string;
   email?: string | null;
   mobileNumber: bigint | number;
+  preferredTime: Date;
 }
 
 export async function POST(req: Request) {
@@ -23,6 +26,7 @@ export async function POST(req: Request) {
       data: data.map((contact: Contact) => ({
         ...contact,
         mobileNumber: `91${contact.mobileNumber}`,
+        preferredTime: dayjs(`1970-01-01 ${contact.preferredTime}`),
       })),
     });
 

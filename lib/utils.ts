@@ -2,20 +2,32 @@ import { type ClassValue, clsx } from "clsx";
 import { Worksheet, Row, Cell, RichText, CellRichTextValue } from "exceljs";
 import { twMerge } from "tailwind-merge";
 import { BulkType, POST } from "@/app/constants";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function sheet_to_json(sheet: Worksheet, type: BulkType) {
-  const cellToBeChecked = type === POST ? 2 : 3;
+  const cellToBeChecked = type === POST ? 2 : 4;
   const json_toSheet: string[][] = [];
   sheet.eachRow((row: Row) => {
     const newRow: string[] = [];
     row.eachCell(function (cell: Cell, colNumber: number): void {
       if (colNumber <= cellToBeChecked) {
         if (cell.value) {
-          if ((cell.value as CellRichTextValue).richText && type === POST) {
+          if (cell.type === 4) {
+            newRow.push(
+              dayjs(cell.value as string)
+                .utc()
+                .format("HH:mm:ss")
+            );
+          } else if (
+            (cell.value as CellRichTextValue).richText &&
+            type === POST
+          ) {
             const cellRichText = (cell.value as CellRichTextValue).richText
               .map((textWithStyle: RichText) => {
                 let richText = textWithStyle.text;
@@ -39,10 +51,11 @@ export function sheet_to_json(sheet: Worksheet, type: BulkType) {
         title,
         content,
       }))
-    : json_toSheet.map(([username, mobileNumber, email]) => ({
+    : json_toSheet.map(([username, mobileNumber, email, preferredTime]) => ({
         username,
         mobileNumber,
         email,
+        preferredTime,
       }));
 }
 

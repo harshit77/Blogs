@@ -33,6 +33,7 @@
     "@tiptap/starter-kit": "^2.1.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "dayjs": "^1.11.10",
     "exceljs": "^3.6.0",
     "isomorphic-dompurify": "^1.9.0",
     "js-xlsx": "^0.8.22",

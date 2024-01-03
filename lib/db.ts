@@ -1,9 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const prismaClientSingleton = () =>
-  process.env.DEBUG
-    ? new PrismaClient({ log: ["query", "info", "warn", "error"] })
-    : new PrismaClient();
+  process.env.DEBUG ? new PrismaClient({ log: ["error"] }) : new PrismaClient();
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
 

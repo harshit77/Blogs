@@ -9,6 +9,7 @@ import { PRISMA_POST_TYPE } from "@/app/constants";
 export interface POST {
   title: string;
   content: string;
+  scheduledTime: Date;
 }
 
 export async function POST(req: Request) {
@@ -31,6 +32,7 @@ export async function POST(req: Request) {
             ...post,
             postType: type as PRISMA_POST_TYPE,
             authorEmail: user.email as string,
+            scheduledTime: new Date(),
             contacts: {
               create: allContacts.map((contact) => ({
                 messageStatus: MessageStatus.ACK_PENDING,

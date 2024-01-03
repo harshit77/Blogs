@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate:dev": "npx dotenv -e .env.local -- prisma migrate dev",
+    "migrate:status": "npx dotenv -e .env.local -- prisma migrate status",
     "db:seed": "npx dotenv -e .env.local -- prisma db seed",
     "prisma-studio": "npx dotenv -e .env.local -- prisma studio",
     "db:pull": "npx dotenv -e .env.local -- prisma db pull",

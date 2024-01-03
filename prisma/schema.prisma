@@ -65,16 +65,16 @@ enum PostType {
 }
 
 model Post {
-  id          String               @id @default(cuid())
-  title       String               @unique
-  content     String               @db.Text
-  author      User?                @relation(fields: [authorEmail], references: [email])
-  authorEmail String
-  createdAt   DateTime             @default(now())
-  comments    Comment[]
-  contacts    MessagesOnContacts[]
-  postType   PostType @default(BlogPost)
-  scheduledTime DateTime  @db.Date
+  id            String               @id @default(cuid())
+  title         String               @unique
+  content       String               @db.Text
+  author        User?                @relation(fields: [authorEmail], references: [email])
+  authorEmail   String
+  createdAt     DateTime             @default(now())
+  comments      Comment[]
+  contacts      MessagesOnContacts[]
+  postType      PostType             @default(BlogPost)
+  scheduledTime DateTime             @default(now()) @db.Date
 }
 
 model Comment {
@@ -87,11 +87,11 @@ model Comment {
 }
 
 model Contact {
-  username     String
-  mobileNumber BigInt               @unique
-  email        String?
-  messages     MessagesOnContacts[]
-  preferredTime DateTime @db.Time(0)
+  username      String
+  mobileNumber  BigInt               @unique
+  email         String?
+  messages      MessagesOnContacts[]
+  preferredTime DateTime             @default(now()) @db.Time(0)
 }
 
 enum MessageStatus {

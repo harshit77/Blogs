@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Contact" ADD COLUMN     "preferredTime" TIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "Post" ADD COLUMN     "scheduledTime" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP;

@@ -23,23 +23,23 @@ export async function GET() {
         },
       },
     });
-    // todaysScheduledPosts.forEach(
-    //   async ({ title, content }: POST) =>
-    //     await fetch("http://localhost:3050/sendmessage", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         message: allContacts.map((contact: Contact) =>
-    //           draftMessage(contact.username, title, content)
-    //         ),
-    //         number: allContacts.map((contact) =>
-    //           contact.mobileNumber.toString()
-    //         ),
-    //       }),
-    //     })
-    // );
+    todaysScheduledPosts.forEach(
+      async ({ title, content }: POST) =>
+        await fetch(`${process.env.WHATSAPP_URL}`, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            message: allContacts.map((contact: Contact) =>
+              draftMessage(contact.username, title, content)
+            ),
+            number: allContacts.map((contact) =>
+              contact.mobileNumber.toString()
+            ),
+          }),
+        })
+    );
     return NextResponse.json({ message: "success" }, { status: 201 });
   } catch (error) {
     console.log("Error in Scheduling messages", error);

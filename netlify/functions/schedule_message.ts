@@ -8,7 +8,7 @@ const handler = async (req: Request, res: Response) => {
 };
 
 export const config: Config = {
-  schedule: "20 17 * * *",
+  schedule: "10 16 * * *",
 };
 
 export default handler;

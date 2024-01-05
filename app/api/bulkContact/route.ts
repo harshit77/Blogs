@@ -2,7 +2,6 @@ import prisma from "@/lib/db";
 import getCurrentUser from "@/lib/session";
 import { NextResponse } from "next/server";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 
 export interface Contact {
   username: string;

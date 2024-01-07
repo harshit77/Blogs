@@ -1,12 +1,16 @@
 import type { Config } from "@netlify/functions";
-import fetch from "node-fetch";
+import axios from "axios";
 
-export default async (req: Request, res: Response) => {
+const handler = async (req: Request, res: Response) => {
   console.log("Schedule kicked off");
-  await fetch("https://dashmind.netlify.app/api/scheduleMessages", { method: "GET" });
-  return new Response("Ok");
+  await axios.get("http://localhost:3001/api/scheduleMessages");
+  return {
+    statusCode: 200,
+  };
 };
 
 export const config: Config = {
-  schedule: "30 12 * * *",
+  schedule: "40 12 * * *",
 };
+
+export default handler;

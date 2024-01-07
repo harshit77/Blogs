@@ -28,7 +28,7 @@ export async function GET() {
         await fetch(`${process.env.WHATSAPP_URL}`, {
           method: "POST",
           headers: {
-            "Content-type": "application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             message: allContacts.map((contact: Contact) =>

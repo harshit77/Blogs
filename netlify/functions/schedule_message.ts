@@ -1,15 +1,12 @@
 import type { Config } from "@netlify/functions";
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-const handler = async (req: Request, res: Response) => {
+export default async (req: Request, res: Response) => {
   console.log("Schedule kicked off");
-  await fetch("/api/scheduleMessages", { method: "GET" });
+  await fetch("https://dashmind.netlify.app/api/scheduleMessages", { method: "GET" });
   return new Response("Ok");
 };
 
 export const config: Config = {
-  schedule: "5 12 * * *",
+  schedule: "30 12 * * *",
 };
-
-export default handler;
-

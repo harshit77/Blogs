@@ -1,5 +1,5 @@
 import type { Config } from "@netlify/functions";
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 
 const handler = async (req: Request, res: Response) => {
   console.log("Schedule kicked off");
@@ -8,7 +8,8 @@ const handler = async (req: Request, res: Response) => {
 };
 
 export const config: Config = {
-  schedule: "10 16 * * *",
+  schedule: "5 12 * * *",
 };
 
 export default handler;
+

@@ -48,24 +48,6 @@ export async function POST(req: Request) {
         })
     );
 
-    data.forEach(
-      async ({ title, content }: POST) =>
-        await fetch("http://localhost:3050/sendmessage", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            message: allContacts.map((contact: Contact) =>
-              draftMessage(contact.username, title, content)
-            ),
-            number: allContacts.map((contact) =>
-              contact.mobileNumber.toString()
-            ),
-          }),
-        })
-    );
-
     return NextResponse.json({ message: "Success" }, { status: 201 });
   } catch (error) {
     return NextResponse.json(

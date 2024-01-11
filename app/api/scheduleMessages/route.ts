@@ -23,6 +23,7 @@ export async function GET() {
         },
       },
     });
+
     todaysScheduledPosts.forEach(
       async ({ title, content }: POST) =>
         await fetch(`${process.env.WHATSAPP_URL}`, {
@@ -42,7 +43,6 @@ export async function GET() {
     );
     return NextResponse.json({ message: "success" }, { status: 201 });
   } catch (error) {
-    console.log("Error in Scheduling messages", error);
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 401 }

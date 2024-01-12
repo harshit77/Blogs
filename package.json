@@ -36,7 +36,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
-    "exceljs": "^3.6.0",
+    "exceljs": "^4.4.0",
     "isomorphic-dompurify": "^1.9.0",
     "js-xlsx": "^0.8.22",
     "lucide-react": "^0.292.0",

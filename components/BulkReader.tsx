@@ -10,6 +10,7 @@ import ExcelJS from "exceljs";
 import { sheet_to_json } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { BulkType, POST, CONTACT, PRISMA_POST_TYPE } from "@/app/constants";
+import CreateSampleFile from "./createSampleFile";
 
 export type Bulk = {
   [key: string]: string;
@@ -19,7 +20,7 @@ export interface BulkProps {
   tableData: Bulk[];
 }
 
-export default function BulkReader({ type = POST }: { type?: BulkType }) {
+export default function BulkReader({ type }: { type: BulkType }) {
   const [parsedData, setParsedData] = useState<Bulk[]>([]);
   const [isLoading, setIsloading] = useState(false);
   const [selectedPostType, setSelectedPostType] = useState<string>(
@@ -37,8 +38,10 @@ export default function BulkReader({ type = POST }: { type?: BulkType }) {
 
         const workbook = await workbookInstance.xlsx.load(data as ArrayBuffer);
         const sheet = workbook.getWorksheet("Sheet1");
-        const parsedData = sheet_to_json(sheet, type);
-        setParsedData(parsedData);
+        if (sheet) {
+          const parsedData = sheet_to_json(sheet, type);
+          setParsedData(parsedData);
+        }
       };
     }
   };
@@ -77,20 +80,23 @@ export default function BulkReader({ type = POST }: { type?: BulkType }) {
       {type !== CONTACT && (
         <div className="flex flex-col space-y-4">
           <Label>Post Type</Label>
-          <RadioGroup
-            defaultValue={selectedPostType}
-            className="flex gap-4"
-            onValueChange={(changedValue: string) =>
-              setSelectedPostType(changedValue)
-            }
-          >
-            {Object.keys(PRISMA_POST_TYPE).map((type) => (
-              <div className="flex items-center space-x-2 " key={type}>
-                <RadioGroupItem value={type} id={type} />
-                <Label htmlFor={type}>{type}</Label>
-              </div>
-            ))}
-          </RadioGroup>
+          <div className="flex justify-between items-center">
+            <RadioGroup
+              defaultValue={selectedPostType}
+              className="flex gap-4"
+              onValueChange={(changedValue: string) =>
+                setSelectedPostType(changedValue)
+              }
+            >
+              {Object.keys(PRISMA_POST_TYPE).map((type) => (
+                <div className="flex items-center space-x-2 " key={type}>
+                  <RadioGroupItem value={type} id={type} />
+                  <Label htmlFor={type}>{type}</Label>
+                </div>
+              ))}
+            </RadioGroup>
+            <CreateSampleFile selectedPostType={selectedPostType} />
+          </div>
         </div>
       )}
       <div className="grid w-full max-w-sm items-center gap-1.5">

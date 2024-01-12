@@ -11,9 +11,15 @@ export enum PRISMA_MESSAGE_STATUS {
 }
 
 export enum PRISMA_POST_TYPE {
-  BlogPost = "BlogPost",
   DailyTips = "DailyTips",
+  BlogPost = "BlogPost",
   Poll = "Poll",
 }
+
+export const SAMPLE_BLOG: [string, string, Date] = [
+  "Why You Need React Query",
+  "Welcome to your Weekly Monthly Tech Crunch, where we provide essential insights to enhance your coding endeavours. Understanding the necessity of React Query for seamless asynchronous state management in data fetching is emphasized.",
+  new Date(),
+];
 
 export type BulkType = typeof POST | typeof CONTACT;

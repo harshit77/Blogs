@@ -1,6 +1,7 @@
 import FileReader from "@/components/BulkReader";
 import getCurrentUser from "@/lib/session";
 import { redirect } from "next/navigation";
+import { POST } from "@/app/constants";
 
 export default async function BulkUpload() {
   const user = await getCurrentUser();
@@ -15,7 +16,7 @@ export default async function BulkUpload() {
           (Blog / Daily Tips / Poll)
         </span>
       </div>
-      <FileReader />
+      <FileReader type={POST} />
     </div>
   );
 }

@@ -59,6 +59,40 @@ export function sheet_to_json(sheet: Worksheet, type: BulkType) {
       }));
 }
 
+export function postValidationRule(workSheet: Worksheet) {
+  workSheet.getColumn("A").eachCell({ includeEmpty: false }, (cell) => {
+    cell.dataValidation = {
+      type: "textLength",
+      showErrorMessage: true,
+      error: "The content length has to be greater than 5 character",
+      operator: "greaterThan",
+      formulae: [5],
+      allowBlank: false,
+    };
+  });
+
+  workSheet.getColumn("B").eachCell({ includeEmpty: false }, (cell) => {
+    cell.dataValidation = {
+      type: "textLength",
+      showErrorMessage: true,
+      error: "The content length has to be greater than 5 character",
+      operator: "greaterThan",
+      formulae: [5],
+      allowBlank: false,
+    };
+  });
+  workSheet.getColumn("C").eachCell({ includeEmpty: false }, (cell) => {
+    cell.dataValidation = {
+      type: "date",
+      showErrorMessage: true,
+      error: "The content date has to be greater than today's date",
+      operator: "greaterThan",
+      formulae: [new Date()],
+      allowBlank: false,
+    };
+  });
+}
+
 export function draftMessage(username: string, title: string, content: string) {
   return `Hey <b>${username}<b>👋 has just posted a blog \n\n${title} \n\n\n ${content} \n\n\n<b>DashMind</b>\nhttps://dashmind.netlify.app `;
 }

@@ -14,4 +14,4 @@ jobs:
       - name: Print Greeting
         run: echo "Hello GitHub Actions"
       - name: Print Goodbye!
-        run: echo "{{ toJSON(gitHub.event)}}"
+        run: echo "{{ toJSON(github.event)}}"

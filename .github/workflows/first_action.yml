@@ -4,6 +4,7 @@ on:
     types:
       - opened
       - edited
+      - converted_to_draft
     branches:
       - master
 jobs:

@@ -1,10 +1,6 @@
 name: First workflow
 on:
-  pull_request:
-    types:
-      - opened
-      - edited
-      - converted_to_draft
+  push:
     branches:
       - master
 jobs:

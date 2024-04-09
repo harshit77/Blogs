@@ -1,5 +1,11 @@
 name: First workflow
-on: workflow_dispatch
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - converted_to_draft
+  push:
 jobs:
   first-job:
     runs-on: ubuntu-latest
@@ -7,4 +13,4 @@ jobs:
       - name: Print Greeting
         run: echo "Hello GitHub Actions"
       - name: Print Goodbye!
-        run: echo "Good Bye my first action"
+        run: echo "${{ toJSON(github.event) }}"
